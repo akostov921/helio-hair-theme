@@ -1,0 +1,31 @@
+<section class="hh-marquee hh-section--tight">
+  <div class="hh-marquee__viewport" aria-hidden="true">
+    <div class="hh-marquee__track">
+      {%- for i in (1..4) -%}
+        {%- for block in section.blocks -%}
+          <span class="hh-marquee__item">{{ block.settings.text }}</span><span class="hh-marquee__sep">{{ section.settings.separator | default: '✦' }}</span>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.hh-marquee__viewport { overflow: hidden; padding-block: 0.85rem; border-block: 1px solid currentColor; opacity: 0.9; }
+.hh-marquee__track { display: inline-flex; gap: 1.5rem; white-space: nowrap; animation: hh-marquee 50s linear infinite; font-size: 0.875rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.hh-marquee__sep { opacity: 0.4; }
+@keyframes hh-marquee { to { transform: translateX(-50%); } }
+{% endstylesheet %}
+{% schema %}
+{ "name": "Marquee", "tag": "section", "settings": [
+  { "type": "text", "id": "separator", "label": "Separator", "default": "✦" }
+], "blocks": [
+  { "type": "msg", "name": "Message", "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Free shipping on $50+" }] }
+], "max_blocks": 8, "presets": [
+  { "name": "Marquee", "blocks": [
+    { "type": "msg", "settings": { "text": "Featured in Vogue" } },
+    { "type": "msg", "settings": { "text": "50,000+ satisfied customers" } },
+    { "type": "msg", "settings": { "text": "Cruelty-free" } },
+    { "type": "msg", "settings": { "text": "Made in NY" } }
+  ]}
+]}
+{% endschema %}

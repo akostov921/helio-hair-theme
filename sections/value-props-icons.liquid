@@ -1,0 +1,37 @@
+{%- comment %} Value-props icon row — 3-4 quick-claim columns under hero {% endcomment -%}
+<section class="hh-vp hh-section" data-section-id="{{ section.id }}">
+  <div class="hh-page">
+    <div class="hh-vp__grid">
+      {%- for block in section.blocks -%}
+        <div class="hh-vp__item" {{ block.shopify_attributes }}>
+          <div class="hh-vp__icon">{%- if block.settings.icon_svg != blank -%}{{ block.settings.icon_svg }}{%- else -%}◦{%- endif -%}</div>
+          <h3 class="hh-vp__heading">{{ block.settings.heading }}</h3>
+          <p class="hh-vp__body">{{ block.settings.body }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.hh-vp__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; padding-block: 2rem; }
+.hh-vp__item { display: grid; gap: 0.5rem; }
+.hh-vp__icon { font-size: 2rem; }
+.hh-vp__heading { font-size: 1rem; font-weight: 600; }
+.hh-vp__body { font-size: 0.9375rem; line-height: 1.55; opacity: 0.8; max-width: 28ch; }
+{% endstylesheet %}
+{% schema %}
+{ "name": "Value props (icons)", "tag": "section", "settings": [], "blocks": [
+  { "type": "item", "name": "Item", "settings": [
+    { "type": "textarea", "id": "icon_svg", "label": "Icon (inline SVG OR emoji)", "default": "◦" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Made with care" },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "A short claim — under 20 words ideally." }
+  ]}
+], "max_blocks": 6, "presets": [
+  { "name": "Value props (icons)", "blocks": [
+    { "type": "item", "settings": { "heading": "Slow-batched" } },
+    { "type": "item", "settings": { "heading": "Cruelty-free" } },
+    { "type": "item", "settings": { "heading": "Made in small studios" } },
+    { "type": "item", "settings": { "heading": "Free shipping over $50" } }
+  ]}
+]}
+{% endschema %}

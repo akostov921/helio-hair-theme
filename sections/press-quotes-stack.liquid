@@ -1,0 +1,36 @@
+<section class="hh-press-stack hh-section">
+  <div class="hh-page">
+    <header class="hh-press-stack__head">
+      <span class="hh-eyebrow">{{ section.settings.eyebrow | default: 'AS SEEN IN' }}</span>
+    </header>
+    <div class="hh-press-stack__grid">
+      {%- for block in section.blocks -%}
+        <figure class="hh-press-stack__card" {{ block.shopify_attributes }}>
+          <blockquote>"{{ block.settings.quote }}"</blockquote>
+          <figcaption>— {{ block.settings.publication }}</figcaption>
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.hh-press-stack__head { margin-bottom: 2rem; text-align: center; }
+.hh-press-stack__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+.hh-press-stack__card { margin: 0; padding: 2rem; display: grid; gap: 0.75rem; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; }
+.hh-press-stack__card blockquote { font-family: var(--hh-serif); font-style: italic; font-size: 1.125rem; line-height: 1.4; margin: 0; }
+.hh-press-stack__card figcaption { font-size: 0.875rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; }
+{% endstylesheet %}
+{% schema %}
+{ "name": "Press quotes", "tag": "section", "settings": [
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "AS SEEN IN" }
+], "blocks": [
+  { "type": "quote", "name": "Quote", "settings": [
+    { "type": "textarea", "id": "quote", "label": "Quote", "default": "The kind of brand that actually keeps its promises." },
+    { "type": "text", "id": "publication", "label": "Publication", "default": "Vogue" }
+  ]}
+], "max_blocks": 6, "presets": [{ "name": "Press quotes", "blocks": [
+  { "type": "quote", "settings": { "publication": "Vogue" } },
+  { "type": "quote", "settings": { "publication": "The Atlantic" } },
+  { "type": "quote", "settings": { "publication": "Kinfolk" } }
+]}]}
+{% endschema %}

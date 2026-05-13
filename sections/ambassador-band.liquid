@@ -1,0 +1,41 @@
+<section class="hh-amb hh-section">
+  <div class="hh-page">
+    <header class="hh-amb__head">
+      <span class="hh-eyebrow">{{ section.settings.eyebrow | default: 'AMBASSADORS' }}</span>
+      <h2 class="hh-h2">{{ section.settings.heading }}</h2>
+    </header>
+    <div class="hh-amb__grid">
+      {%- for block in section.blocks -%}
+        <figure class="hh-amb__card" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}{{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'hh-amb__img' }}
+          {%- elsif block.settings.fallback_url != blank -%}<img src="{{ block.settings.fallback_url }}" class="hh-amb__img" alt="" width="600" height="800" loading="lazy">{%- endif -%}
+          <figcaption><strong>{{ block.settings.name }}</strong><small>{{ block.settings.role }}</small></figcaption>
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.hh-amb__head { display: grid; gap: 0.5rem; margin-bottom: 2.5rem; max-width: 56ch; }
+.hh-amb__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+.hh-amb__card { margin: 0; display: grid; gap: 0.75rem; }
+.hh-amb__img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 8px; }
+.hh-amb__card figcaption { display: grid; gap: 0.25rem; }
+.hh-amb__card figcaption strong { font-family: var(--hh-serif); }
+.hh-amb__card figcaption small { opacity: 0.65; font-size: 0.875rem; }
+{% endstylesheet %}
+{% schema %}
+{ "name": "Ambassador band", "tag": "section", "settings": [
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "AMBASSADORS" },
+  { "type": "text", "id": "heading", "label": "Heading", "default": "Loved by people we admire." }
+], "blocks": [
+  { "type": "person", "name": "Person", "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photo" },
+    { "type": "text", "id": "fallback_url", "label": "Fallback URL" },
+    { "type": "text", "id": "name", "label": "Name", "default": "L. Park" },
+    { "type": "text", "id": "role", "label": "Role", "default": "Stylist · NY" }
+  ]}
+], "max_blocks": 8, "presets": [{ "name": "Ambassador band", "blocks": [
+  { "type": "person" }, { "type": "person" }, { "type": "person" }, { "type": "person" }
+]}]}
+{% endschema %}

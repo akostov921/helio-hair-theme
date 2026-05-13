@@ -1,0 +1,37 @@
+<section class="hh-quiz hh-section">
+  <div class="hh-page hh-quiz__grid">
+    <div class="hh-quiz__copy">
+      <span class="hh-eyebrow">{{ section.settings.eyebrow | default: 'FIND YOURS' }}</span>
+      <h2 class="hh-h2">{{ section.settings.heading }}</h2>
+      <p class="hh-lead">{{ section.settings.body }}</p>
+      <a class="hh-btn" href="{{ section.settings.cta_link }}">{{ section.settings.cta_text }}</a>
+      {%- if section.settings.support != blank -%}<small class="hh-quiz__support">{{ section.settings.support }}</small>{%- endif -%}
+    </div>
+    <div class="hh-quiz__visual">
+      {%- if section.settings.image != blank -%}{%- assign qalt = section.settings.heading | escape -%}{{ section.settings.image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: qalt, class: 'hh-quiz__img' }}
+      {%- elsif section.settings.fallback_url != blank -%}<img src="{{ section.settings.fallback_url }}" class="hh-quiz__img" alt="" width="1000" height="800" loading="lazy">
+      {%- else -%}<div class="hh-quiz__icon">?</div>{%- endif -%}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.hh-quiz__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+.hh-quiz__copy { display: grid; gap: 1rem; max-width: 44ch; }
+.hh-quiz__copy .hh-btn { justify-self: start; }
+.hh-quiz__support { opacity: 0.7; font-size: 0.875rem; }
+.hh-quiz__img { width: 100%; aspect-ratio: 5/4; object-fit: cover; border-radius: 8px; }
+.hh-quiz__icon { aspect-ratio: 5/4; display: grid; place-items: center; background: rgba(0,0,0,0.05); border-radius: 8px; font-size: 8rem; font-family: var(--hh-serif); font-style: italic; opacity: 0.3; }
+@media (max-width: 880px) { .hh-quiz__grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+{% schema %}
+{ "name": "Quiz / finder CTA", "tag": "section", "settings": [
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FIND YOURS" },
+  { "type": "text", "id": "heading", "label": "Heading", "default": "Find your routine in 60 seconds." },
+  { "type": "textarea", "id": "body", "label": "Body", "default": "A short quiz that asks the right questions and recommends a 3-step kit. No spam." },
+  { "type": "text", "id": "cta_text", "label": "CTA text", "default": "Take the quiz →" },
+  { "type": "url", "id": "cta_link", "label": "CTA link" },
+  { "type": "text", "id": "support", "label": "Support text", "default": "Free · 60 seconds · 87% match rate" },
+  { "type": "image_picker", "id": "image", "label": "Image" },
+  { "type": "text", "id": "fallback_url", "label": "Fallback image URL" }
+], "presets": [{ "name": "Quiz / finder CTA" }]}
+{% endschema %}
