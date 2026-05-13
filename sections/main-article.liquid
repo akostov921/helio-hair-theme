@@ -1,0 +1,32 @@
+<article class="hh-article hh-section">
+  <div class="hh-page hh-page--narrow">
+    <header class="hh-article__head">
+      <small class="hh-eyebrow">{{ article.published_at | date: '%B %-d, %Y' }} · {{ blog.title }}</small>
+      <h1 class="hh-display hh-article__title">{{ article.title }}</h1>
+      {%- if article.user.first_name -%}
+        <p class="hh-italic">By {{ article.user.first_name }} {{ article.user.last_name }}</p>
+      {%- endif -%}
+    </header>
+    {%- if article.image -%}
+      <figure class="hh-article__hero">
+        {{ article.image | image_url: width: 1400 | image_tag: loading: 'eager', widths: '720,1100,1400,1800', alt: article.title | escape }}
+      </figure>
+    {%- endif -%}
+    <div class="hh-article__body">{{ article.content }}</div>
+  </div>
+</article>
+
+{% stylesheet %}
+.hh-article__head { display: grid; gap: var(--hh-space-3); margin-bottom: var(--hh-space-7); }
+.hh-article__title { margin-top: var(--hh-space-2); }
+.hh-article__hero { margin: var(--hh-space-6) 0; }
+.hh-article__hero img { width: 100%; }
+.hh-article__body { font-size: 1.0625rem; line-height: 1.75; color: var(--hh-ink-soft); }
+.hh-article__body p { margin-bottom: var(--hh-space-4); }
+.hh-article__body p:first-of-type::first-letter { font-family: var(--hh-serif); font-size: 4em; line-height: 0.85; float: left; padding-right: 0.15em; padding-top: 0.05em; }
+.hh-article__body h2, .hh-article__body h3 { font-family: var(--hh-serif); color: var(--hh-ink); margin-top: var(--hh-space-6); margin-bottom: var(--hh-space-3); }
+.hh-article__body a { color: var(--hh-accent); border-bottom: 1px solid currentColor; }
+.hh-article__body blockquote { font-family: var(--hh-serif); font-style: italic; font-size: 1.5rem; line-height: 1.35; border-left: 1px solid var(--hh-ink); padding-left: var(--hh-space-5); margin-block: var(--hh-space-5); color: var(--hh-ink); }
+{% endstylesheet %}
+
+{% schema %}{ "name": "Article", "tag": "article" }{% endschema %}

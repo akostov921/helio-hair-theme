@@ -1,0 +1,39 @@
+<section class="hh-search hh-section">
+  <div class="hh-page hh-page--narrow">
+    <header><span class="hh-eyebrow">Search</span>
+      <h1 class="hh-h1">{%- if search.performed -%}Results for "{{ search.terms | escape }}"{%- else -%}Search the catalogue{%- endif -%}</h1>
+    </header>
+    <form action="{{ routes.search_url }}" method="get" class="hh-search__form">
+      <label class="hh-vh" for="q">Search</label>
+      <input id="q" type="search" name="q" value="{{ search.terms | escape }}" class="hh-input" placeholder="{{ 'general.search.placeholder' | t }}" autofocus>
+      <button type="submit" class="hh-link">Search</button>
+    </form>
+    <div class="hh-rule"></div>
+    {%- if search.performed -%}
+      {%- if search.results_count > 0 -%}
+        <div class="hh-search__list">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {% render 'product-card', product: item, aspect: 'cover' %}
+            {%- else -%}
+              <a class="hh-search__item" href="{{ item.url }}">
+                <small class="hh-eyebrow">{{ item.object_type }}</small>
+                <strong class="hh-h3">{{ item.title }}</strong>
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p>{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+.hh-search__form { display: grid; grid-template-columns: 1fr auto; gap: var(--hh-space-3); align-items: end; margin-top: var(--hh-space-4); }
+.hh-search__list { display: grid; gap: var(--hh-space-5); margin-top: var(--hh-space-5); }
+.hh-search__item { display: grid; gap: var(--hh-space-1); padding-block: var(--hh-space-3); border-bottom: 1px solid var(--hh-rule); }
+{% endstylesheet %}
+
+{% schema %}{ "name": "Search", "tag": "section" }{% endschema %}

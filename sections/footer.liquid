@@ -1,0 +1,42 @@
+<footer class="hh-footer" data-section-id="{{ section.id }}">
+  <div class="hh-page hh-footer__top">
+    <div class="hh-footer__brand">
+      <p class="hh-display hh-italic">{{ shop.name }}</p>
+      {%- if section.settings.tagline != blank -%}<p class="hh-footer__tagline">{{ section.settings.tagline }}</p>{%- endif -%}
+    </div>
+    <div class="hh-footer__cols">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'menu' -%}
+          <div class="hh-footer__col" {{ block.shopify_attributes }}><h4 class="hh-eyebrow">{{ block.settings.heading }}</h4><ul>{%- for link in linklists[block.settings.menu].links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}</ul></div>
+        {%- elsif block.type == 'text' -%}
+          <div class="hh-footer__col" {{ block.shopify_attributes }}><h4 class="hh-eyebrow">{{ block.settings.heading }}</h4><div class="hh-footer__text">{{ block.settings.text }}</div></div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  <div class="hh-page hh-footer__bottom">
+    <small>© {{ 'now' | date: '%Y' }} {{ shop.name }} · Made with care in small batches.</small>
+    <div>{%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}</div>
+  </div>
+</footer>
+{% stylesheet %}
+.hh-footer { background: var(--hh-bg-2); padding-block: var(--hh-space-8) var(--hh-space-5); margin-top: var(--hh-space-9); }
+.hh-footer__top { display: grid; grid-template-columns: 1.2fr 2fr; gap: var(--hh-space-8); padding-bottom: var(--hh-space-6); border-bottom: 1px solid var(--hh-rule); }
+.hh-footer__brand .hh-display { font-size: clamp(3rem, 6vw, 5rem); color: var(--hh-sage-deep); }
+.hh-footer__tagline { margin-top: var(--hh-space-2); color: var(--hh-ink-soft); }
+.hh-footer__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--hh-space-6); }
+.hh-footer__col ul { list-style: none; padding: 0; margin-top: var(--hh-space-3); display: grid; gap: var(--hh-space-2); }
+.hh-footer__col a { color: var(--hh-ink-soft); font-size: var(--hh-fs-sm); transition: color var(--hh-dur) var(--hh-ease); }
+.hh-footer__col a:hover { color: var(--hh-clay); }
+.hh-footer__text { margin-top: var(--hh-space-3); color: var(--hh-ink-soft); font-size: var(--hh-fs-sm); }
+.hh-footer__bottom { display: flex; justify-content: space-between; padding-top: var(--hh-space-5); flex-wrap: wrap; gap: var(--hh-space-3); color: var(--hh-ink-mute); font-size: var(--hh-fs-sm); }
+@media (max-width: 720px) { .hh-footer__top { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+{% schema %}
+{ "name": "Footer", "settings": [
+  { "type": "text", "id": "tagline", "label": "Tagline", "default": "Botanically-led haircare for the long ritual." }
+], "blocks": [
+  { "type": "menu", "name": "Menu column", "settings": [{ "type": "text", "id": "heading", "label": "Heading", "default": "Shop" }, { "type": "link_list", "id": "menu", "label": "Menu" }] },
+  { "type": "text", "name": "Text column", "settings": [{ "type": "text", "id": "heading", "label": "Heading", "default": "Care" }, { "type": "richtext", "id": "text", "label": "Text" }] }
+], "max_blocks": 4 }
+{% endschema %}

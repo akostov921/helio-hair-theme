@@ -1,0 +1,21 @@
+<section class="hh-section"><div class="hh-page hh-page--narrow">
+  <header><span class="hh-eyebrow">Account</span><h1 class="hh-display">Welcome, {{ customer.first_name | default: 'reader' }}.</h1></header>
+  <div class="hh-rule"></div>
+  <p style="margin-bottom: var(--hh-space-5);"><a class="hh-link" href="{{ routes.account_logout_url }}">Sign out</a></p>
+  <h2 class="hh-h2">Orders</h2>
+  {%- if customer.orders.size > 0 -%}
+    <table class="hh-table">
+      <thead><tr><th>Order</th><th>Date</th><th>Total</th><th>Status</th></tr></thead>
+      <tbody>
+        {%- for order in customer.orders -%}
+          <tr><td><a class="hh-link" href="{{ order.customer_url }}">{{ order.name }}</a></td><td>{{ order.created_at | date: '%B %-d, %Y' }}</td><td>{{ order.total_price | money }}</td><td>{{ order.financial_status_label }}</td></tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+  {%- else -%}
+    <p>No orders yet. <a class="hh-link" href="{{ routes.all_products_collection_url }}">Find your first book →</a></p>
+  {%- endif -%}
+  <h2 class="hh-h2" style="margin-top: var(--hh-space-7);">Addresses</h2>
+  <p><a class="hh-link" href="{{ routes.account_addresses_url }}">Manage addresses</a></p>
+</div></section>
+<style>.hh-table { width: 100%; border-collapse: collapse; font-size: var(--hh-fs-sm); margin-top: var(--hh-space-3); } .hh-table th, .hh-table td { padding: var(--hh-space-3) var(--hh-space-2); text-align: left; border-bottom: 1px solid var(--hh-rule); } .hh-table th { color: var(--hh-ink-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; font-size: var(--hh-fs-xs); }</style>

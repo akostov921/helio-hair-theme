@@ -1,0 +1,38 @@
+<section class="hh-blog hh-section">
+  <div class="hh-page">
+    <header><span class="hh-eyebrow">Journal</span><h1 class="hh-display">{{ blog.title }}</h1></header>
+    <div class="hh-rule"></div>
+    <ul class="hh-blog__list">
+      {%- paginate blog.articles by 12 -%}
+        {%- for article in blog.articles -%}
+          <li class="hh-blog__item">
+            <a href="{{ article.url }}" class="hh-blog__link">
+              {%- if article.image -%}
+                {{ article.image | image_url: width: 800 | image_tag: class: 'hh-blog__img', loading: 'lazy', widths: '480,720,800,1200', alt: article.title | escape }}
+              {%- endif -%}
+              <div class="hh-blog__meta">
+                <small class="hh-eyebrow">{{ article.published_at | date: '%B %-d, %Y' }}</small>
+                <h2 class="hh-h2 hh-blog__title">{{ article.title }}</h2>
+                <p class="hh-blog__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 30 }}</p>
+                <span class="hh-link">Read essay</span>
+              </div>
+            </a>
+          </li>
+        {%- endfor -%}
+      {%- endpaginate -%}
+    </ul>
+  </div>
+</section>
+
+{% stylesheet %}
+.hh-blog__list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--hh-space-8); margin-top: var(--hh-space-6); }
+.hh-blog__item { padding-bottom: var(--hh-space-7); border-bottom: 1px solid var(--hh-rule); }
+.hh-blog__link { display: grid; grid-template-columns: 1fr 1.6fr; gap: var(--hh-space-6); color: inherit; }
+.hh-blog__img { width: 100%; aspect-ratio: 5 / 4; object-fit: cover; }
+.hh-blog__meta { display: grid; gap: var(--hh-space-3); align-content: start; }
+.hh-blog__title { margin-top: var(--hh-space-1); }
+.hh-blog__excerpt { color: var(--hh-ink-soft); line-height: 1.6; max-width: 56ch; }
+@media (max-width: 720px) { .hh-blog__link { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}{ "name": "Blog", "tag": "section" }{% endschema %}

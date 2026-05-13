@@ -1,0 +1,70 @@
+{%- comment %} Composition: pdp.info-floating-card.media-full-bleed
+   Big full-width image; info as a floating card overlapping the image bottom-left.
+{% endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+-%}
+<section class="hh-pdp" data-section-id="{{ section.id }}">
+  <div class="hh-pdp__hero">
+    {%- if product.featured_image -%}
+      {%- assign palt = product.title | escape -%}
+      {{ product.featured_image | image_url: width: 2000 | image_tag: loading: 'eager', class: 'hh-pdp__hero-img', alt: palt }}
+    {%- else -%}
+      <img class="hh-pdp__hero-img" src="https://images.unsplash.com/photo-1626015449731-d586b6e34d2c?w=2000&q=80" alt="" width="2000" height="1200">
+    {%- endif -%}
+  </div>
+  <div class="hh-page">
+    <div class="hh-pdp__card hh-reveal">
+      <small class="hh-eyebrow">{{ product.type | default: 'Botanical wash' }}</small>
+      <h1 class="hh-display">{{ product.title }}</h1>
+      {%- if product.vendor != blank -%}<p class="hh-pdp__author hh-italic">{{ product.vendor }}</p>{%- endif -%}
+      <p class="hh-pdp__price">{{ current_variant.price | money_without_trailing_zeros }}</p>
+      <div class="hh-pdp__desc">{{ product.description | default: '<p>A gentle cleanser formulated with cold-pressed botanical oils, pH-balanced and free from sulfates. Built for daily use on the scalp and hair.</p>' }}</div>
+      <hh-product-form>
+        {%- form 'product', product, class: 'hh-pdp__form' -%}
+          {%- if product.has_only_default_variant == false -%}
+            {%- for option in product.options_with_values -%}
+              <fieldset class="hh-pdp__option"><legend class="hh-eyebrow">{{ option.name }}</legend>
+                <div class="hh-pdp__chips">{%- for value in option.values -%}<label class="hh-pdp__chip"><input type="radio" name="options[{{ option.name | escape }}]" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}><span>{{ value }}</span></label>{%- endfor -%}</div>
+              </fieldset>
+            {%- endfor -%}
+          {%- endif -%}
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button type="submit" class="hh-btn hh-btn--solid hh-pdp__buy" {% unless current_variant.available %}disabled{% endunless %}>{%- if current_variant.available -%}Add to bag{%- else -%}Sold out{%- endif -%}</button>
+        {%- endform -%}
+      </hh-product-form>
+    </div>
+  </div>
+  {%- if product.media.size > 1 -%}
+    <div class="hh-page hh-pdp__more">
+      <h2 class="hh-h2 hh-italic">Look closer</h2>
+      <div class="hh-pdp__gallery">
+        {%- for media in product.media offset: 1 limit: 4 -%}{%- if media.media_type == 'image' -%}{{ media | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'hh-pdp__thumb' }}{%- endif -%}{%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+{% stylesheet %}
+.hh-pdp { padding: 0; padding-bottom: var(--hh-space-9); }
+.hh-pdp__hero { position: relative; height: clamp(60vh, 80vh, 900px); overflow: hidden; }
+.hh-pdp__hero-img { width: 100%; height: 100%; object-fit: cover; }
+.hh-pdp .hh-page { position: relative; margin-top: -160px; z-index: 2; }
+.hh-pdp__card { background: var(--hh-paper); padding: clamp(2rem, 4vw, 3rem); border-radius: var(--hh-radius-lg); max-width: 480px; box-shadow: 0 24px 60px rgba(28, 36, 24, 0.15); display: grid; gap: var(--hh-space-3); margin-left: auto; }
+.hh-pdp__author { font-family: var(--hh-serif); font-style: italic; color: var(--hh-clay); }
+.hh-pdp__price { font-family: var(--hh-serif); font-size: 1.5rem; padding-block: var(--hh-space-3); border-block: 1px solid var(--hh-rule); }
+.hh-pdp__desc { color: var(--hh-ink-soft); line-height: 1.65; font-size: 0.95rem; }
+.hh-pdp__option { border: 0; padding: 0; margin: 0; display: grid; gap: var(--hh-space-2); }
+.hh-pdp__chips { display: flex; gap: var(--hh-space-2); flex-wrap: wrap; }
+.hh-pdp__chip { position: relative; cursor: pointer; }
+.hh-pdp__chip input { position: absolute; opacity: 0; pointer-events: none; }
+.hh-pdp__chip span { display: inline-flex; padding: 0.45rem 0.9rem; border: 1px solid var(--hh-rule); font-size: var(--hh-fs-sm); border-radius: 999px; transition: all var(--hh-dur) var(--hh-ease); }
+.hh-pdp__chip input:checked + span { background: var(--hh-sage-deep); color: #fff; border-color: var(--hh-sage-deep); }
+.hh-pdp__buy { justify-content: center; }
+.hh-pdp__buy[disabled] { opacity: 0.5; }
+.hh-pdp__more { margin-top: var(--hh-space-8); }
+.hh-pdp__gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--hh-space-3); margin-top: var(--hh-space-5); }
+.hh-pdp__thumb { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: var(--hh-radius); }
+@media (max-width: 880px) { .hh-pdp .hh-page { margin-top: -100px; } .hh-pdp__card { margin-inline: auto; } }
+{% endstylesheet %}
+{% schema %}{ "name": "Product", "tag": "section" }{% endschema %}

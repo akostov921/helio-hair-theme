@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "hero": { "type": "hero", "settings": { "eyebrow": "Hair care, considered.", "heading": "Slow rituals for everyday hair.", "lead": "Botanically-led haircare made in small batches. Cold-pressed oils, plant proteins, and pH-balanced cleansers — formulated for scalp and shine, not just shelf appeal.", "cta_text": "Shop the range", "cta_link": "/collections/all" } },
+    "featured": { "type": "featured-products", "settings": { "eyebrow": "The range", "heading": "Everyday rituals.", "products_to_show": 10, "link_text": "Explore everything →", "link_url": "/collections/all" } },
+    "newsletter": { "type": "newsletter" }
+  },
+  "order": ["hero", "featured", "newsletter"]
+}

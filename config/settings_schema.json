@@ -1,0 +1,35 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Helio Hair",
+    "theme_version": "1.0.0",
+    "theme_author": "Helio Hair",
+    "theme_documentation_url": "https://heliohair.example/docs",
+    "theme_support_url": "https://heliohair.example/support"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      { "type": "header", "content": "Logo & favicon" },
+      { "type": "image_picker", "id": "logo", "label": "Logo image" },
+      { "type": "range", "id": "logo_width", "label": "Logo width (px)", "min": 60, "max": 220, "step": 5, "default": 130 },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" },
+      { "type": "header", "content": "Brand colors" },
+      { "type": "color", "id": "color_theme", "label": "Theme color", "default": "#f5efe4" }
+    ]
+  },
+  {
+    "name": "Publication",
+    "settings": [
+      { "type": "text", "id": "issue_number", "label": "Issue number (top bar)", "default": "Vol. VI" },
+      { "type": "text", "id": "issue_date", "label": "Issue date (top bar)", "default": "Autumn 2026" }
+    ]
+  },
+  {
+    "name": "Social",
+    "settings": [
+      { "type": "text", "id": "social_instagram", "label": "Instagram URL" },
+      { "type": "text", "id": "social_twitter", "label": "X / Twitter URL" }
+    ]
+  }
+]

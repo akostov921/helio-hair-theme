@@ -1,0 +1,27 @@
+<section class="hh-news hh-section" data-section-id="{{ section.id }}">
+  <div class="hh-page hh-page--narrow hh-news__inner hh-reveal">
+    <span class="hh-eyebrow">{{ section.settings.eyebrow }}</span>
+    <h2 class="hh-h1 hh-italic">{{ section.settings.heading }}</h2>
+    <p class="hh-lead">{{ section.settings.body }}</p>
+    {%- form 'customer', class: 'hh-news__form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <label class="hh-vh" for="hh-news-email">Email</label>
+      <input id="hh-news-email" class="hh-input" type="email" name="contact[email]" placeholder="you@example.com" required>
+      <button type="submit" class="hh-link">Subscribe</button>
+      {%- if form.posted_successfully? -%}<p class="hh-news__msg">You're in. We send one slow letter each fortnight.</p>{%- endif -%}
+    {%- endform -%}
+  </div>
+</section>
+{% stylesheet %}
+.hh-news { background: var(--hh-bg-2); }
+.hh-news__inner { display: grid; gap: var(--hh-space-3); text-align: left; }
+.hh-news__form { display: grid; grid-template-columns: 1fr auto; gap: var(--hh-space-3); align-items: end; margin-top: var(--hh-space-4); max-width: 480px; }
+.hh-news__msg { grid-column: 1 / -1; color: var(--hh-sage-deep); font-size: var(--hh-fs-sm); }
+{% endstylesheet %}
+{% schema %}
+{ "name": "Newsletter", "tag": "section", "settings": [
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The slow letter" },
+  { "type": "text", "id": "heading", "label": "Heading", "default": "One letter every fortnight." },
+  { "type": "textarea", "id": "body", "label": "Body", "default": "Notes on formulation, founder reflections, the occasional discount. We send rarely; we never sell your address." }
+], "presets": [{ "name": "Newsletter" }] }
+{% endschema %}

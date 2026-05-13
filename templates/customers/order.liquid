@@ -1,0 +1,9 @@
+<section class="hh-section"><div class="hh-page hh-page--narrow">
+  <header><span class="hh-eyebrow">Order</span><h1 class="hh-display">{{ order.name }}</h1></header>
+  <p>Placed {{ order.created_at | date: '%B %-d, %Y' }}. Total <strong>{{ order.total_price | money }}</strong>.</p>
+  <table class="hh-table">
+    <thead><tr><th>Title</th><th>Qty</th><th>Total</th></tr></thead>
+    <tbody>{%- for li in order.line_items -%}<tr><td>{{ li.title }}</td><td>{{ li.quantity }}</td><td>{{ li.final_line_price | money }}</td></tr>{%- endfor -%}</tbody>
+  </table>
+  <p style="margin-top: 1.5rem;"><a class="hh-link" href="{{ routes.account_url }}">Back to account</a></p>
+</div></section>

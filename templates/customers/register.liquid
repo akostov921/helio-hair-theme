@@ -1,0 +1,14 @@
+<section class="hh-section"><div class="hh-page hh-page--narrow">
+  <header><span class="hh-eyebrow">Account</span><h1 class="hh-display">Create account</h1></header>
+  <div class="hh-rule"></div>
+  {%- form 'create_customer', class: 'hh-auth' -%}
+    {{ form.errors | default_errors }}
+    <label class="hh-eyebrow">First name <input class="hh-input" name="customer[first_name]" type="text"></label>
+    <label class="hh-eyebrow">Last name <input class="hh-input" name="customer[last_name]" type="text"></label>
+    <label class="hh-eyebrow">Email <input class="hh-input" name="customer[email]" type="email" required></label>
+    <label class="hh-eyebrow">Password <input class="hh-input" name="customer[password]" type="password" required></label>
+    <button type="submit" class="hh-btn">Create</button>
+    <p class="hh-auth__alt"><a class="hh-link" href="{{ routes.account_login_url }}">Have an account? Sign in</a></p>
+  {%- endform -%}
+</div></section>
+<style>.hh-auth { display: grid; gap: var(--hh-space-4); margin-top: var(--hh-space-4); } .hh-auth label { display: grid; gap: var(--hh-space-1); }</style>

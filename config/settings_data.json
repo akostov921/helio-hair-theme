@@ -1,0 +1,11 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "color_theme": "#f5efe4",
+      "logo_width": 130,
+      "issue_number": "Vol. VI",
+      "issue_date": "Autumn 2026"
+    }
+  }
+}

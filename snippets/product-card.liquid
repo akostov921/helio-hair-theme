@@ -1,0 +1,31 @@
+{%- assign aspect = aspect | default: 'square' -%}
+<a class="hh-card hh-reveal" href="{{ product.url }}">
+  <div class="hh-card__media hh-card__media--{{ aspect }}">
+    {%- if product.featured_image -%}
+      {%- assign hh_alt = product.title | escape -%}
+      {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '300,500,800', sizes: '(min-width: 880px) 30vw, 50vw', alt: hh_alt, class: 'hh-card__img' }}
+    {%- else -%}
+      <span class="hh-card__ph">◦</span>
+    {%- endif -%}
+  </div>
+  <div class="hh-card__body">
+    {%- if product.vendor != blank -%}<small class="hh-card__author">{{ product.vendor }}</small>{%- endif -%}
+    <h3 class="hh-card__title hh-italic">{{ product.title }}</h3>
+    <span class="hh-card__price">{{ product.price | money_without_trailing_zeros }}</span>
+  </div>
+</a>
+
+{% stylesheet %}
+.hh-card { display: block; color: inherit; }
+.hh-card__media { background: var(--hh-bg-2); overflow: hidden; border-radius: var(--hh-radius); }
+.hh-card__media--cover { aspect-ratio: 3 / 4; }
+.hh-card__media--square { aspect-ratio: 1 / 1; }
+.hh-card__media--landscape { aspect-ratio: 4 / 3; }
+.hh-card__img { width: 100%; height: 100%; object-fit: cover; transition: opacity var(--hh-dur-slow) var(--hh-ease); }
+.hh-card:hover .hh-card__img { opacity: 0.92; }
+.hh-card__ph { display: grid; place-items: center; aspect-ratio: 1; color: var(--hh-sage); font-family: var(--hh-serif); font-size: 2.5rem; }
+.hh-card__body { padding-top: var(--hh-space-3); }
+.hh-card__author { color: var(--hh-ink-mute); font-size: var(--hh-fs-xs); display: block; text-transform: uppercase; letter-spacing: 0.06em; }
+.hh-card__title { font-family: var(--hh-serif); font-style: italic; font-size: 1.0625rem; margin-top: 2px; }
+.hh-card__price { display: block; margin-top: var(--hh-space-1); color: var(--hh-ink-soft); font-size: var(--hh-fs-sm); }
+{% endstylesheet %}

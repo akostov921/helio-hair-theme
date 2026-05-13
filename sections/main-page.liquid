@@ -1,0 +1,21 @@
+<article class="hh-page-cms hh-section">
+  <div class="hh-page hh-page--narrow">
+    <header>
+      <span class="hh-eyebrow">Page</span>
+      <h1 class="hh-display">{{ page.title }}</h1>
+    </header>
+    <div class="hh-rule"></div>
+    <div class="hh-page-cms__body">{{ page.content }}</div>
+  </div>
+</article>
+
+{% stylesheet %}
+.hh-page-cms__body { font-size: 1.0625rem; line-height: 1.7; color: var(--hh-ink-soft); }
+.hh-page-cms__body h2 { font-family: var(--hh-serif); font-size: var(--hh-fs-h2); margin-top: var(--hh-space-7); margin-bottom: var(--hh-space-3); color: var(--hh-ink); }
+.hh-page-cms__body h3 { font-family: var(--hh-serif); font-size: var(--hh-fs-h3); margin-top: var(--hh-space-5); margin-bottom: var(--hh-space-3); color: var(--hh-ink); }
+.hh-page-cms__body p { margin-bottom: var(--hh-space-4); }
+.hh-page-cms__body img { margin-block: var(--hh-space-5); }
+.hh-page-cms__body a { color: var(--hh-accent); border-bottom: 1px solid currentColor; }
+{% endstylesheet %}
+
+{% schema %}{ "name": "Page", "tag": "section" }{% endschema %}

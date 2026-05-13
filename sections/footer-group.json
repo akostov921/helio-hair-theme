@@ -1,0 +1,17 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "cat": { "type": "menu", "settings": { "heading": "Catalogue", "menu": "footer" } },
+        "house": { "type": "menu", "settings": { "heading": "The house", "menu": "footer" } },
+        "contact": { "type": "text", "settings": { "heading": "Contact", "text": "<p>orders@heliohair.example<br>+44 (0)20 7946 0958<br>The Old Foundry, London EC1</p>" } }
+      },
+      "block_order": ["cat", "house", "contact"],
+      "settings": { "tagline": "Books for the long margin of one's life." }
+    }
+  },
+  "order": ["footer"]
+}

@@ -1,0 +1,40 @@
+{%- comment %} nav.transparent-becomes-thin-blur — beauty soft luxury {% endcomment -%}
+<header class="hh-header" data-section-id="{{ section.id }}">
+  <div class="hh-page hh-header__inner">
+    <a href="{{ routes.root_url }}" class="hh-header__logo">
+      {%- if section.settings.logo != blank -%}{{ section.settings.logo | image_url: width: 400 | image_tag: width: 130 }}
+      {%- else -%}<span class="hh-header__wordmark hh-italic">{{ shop.name }}</span>{%- endif -%}
+    </a>
+    <nav class="hh-header__nav" aria-label="Main">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <a href="{{ link.url }}" class="hh-header__link{% if link.active %} is-active{% endif %}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+    <div class="hh-header__actions">
+      <a href="{{ routes.search_url }}" class="hh-header__action">Search</a>
+      {%- if customer -%}<a href="{{ routes.account_url }}" class="hh-header__action">Account</a>
+      {%- else -%}<a href="{{ routes.account_login_url }}" class="hh-header__action">Sign in</a>{%- endif -%}
+      <button data-cart-toggle class="hh-header__action hh-header__cart">Bag<span data-cart-count>({{ cart.item_count }})</span></button>
+    </div>
+  </div>
+</header>
+{% stylesheet %}
+.hh-header { background: rgba(244, 237, 225, 0); position: sticky; top: 0; z-index: 100; transition: background var(--hh-dur) var(--hh-ease), backdrop-filter var(--hh-dur) var(--hh-ease); }
+.hh-header.is-scrolled { background: rgba(244, 237, 225, 0.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.hh-header__inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding-block: var(--hh-space-4); gap: var(--hh-space-5); }
+.hh-header__logo { justify-self: start; }
+.hh-header__wordmark { font-family: var(--hh-serif); font-size: 1.5rem; font-style: italic; }
+.hh-header__nav { display: flex; gap: var(--hh-space-6); justify-self: center; }
+.hh-header__link { font-size: var(--hh-fs-sm); color: var(--hh-ink-soft); transition: color var(--hh-dur) var(--hh-ease); }
+.hh-header__link:hover, .hh-header__link.is-active { color: var(--hh-ink); }
+.hh-header__actions { display: flex; gap: var(--hh-space-4); justify-self: end; align-items: center; }
+.hh-header__action { font-size: var(--hh-fs-sm); color: var(--hh-ink-soft); background: none; border: 0; padding: 0; cursor: pointer; font-family: inherit; transition: color var(--hh-dur) var(--hh-ease); display: inline-flex; gap: 0.3rem; }
+.hh-header__action:hover { color: var(--hh-clay); }
+@media (max-width: 768px) { .hh-header__inner { grid-template-columns: auto 1fr; } .hh-header__nav { display: none; } }
+{% endstylesheet %}
+{% schema %}
+{ "name": "Header", "settings": [
+  { "type": "image_picker", "id": "logo", "label": "Logo" },
+  { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+] }
+{% endschema %}

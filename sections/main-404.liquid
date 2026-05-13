@@ -1,0 +1,17 @@
+{%- comment %}
+  State pattern: 404-editorial-quiet (different from Storynest's narrative-warm).
+  Catalogue: ~/Desktop/design-library/patterns/states/_INDEX.md
+{% endcomment -%}
+<section class="hh-404 hh-section--ample">
+  <div class="hh-page hh-page--narrow hh-404__inner">
+    <span class="hh-eyebrow">404</span>
+    <h1 class="hh-display hh-italic">Page not found.</h1>
+    <p class="hh-lead">{{ 'general.404.subtext' | t }}</p>
+    <a class="hh-link" href="{{ routes.root_url }}">{{ 'general.404.link' | t }}</a>
+  </div>
+</section>
+<style>
+  .hh-404__inner { text-align: left; display: grid; gap: var(--hh-space-4); }
+</style>
+
+{% schema %}{ "name": "404", "tag": "section" }{% endschema %}

@@ -1,0 +1,16 @@
+<section class="hh-section"><div class="hh-page hh-page--narrow">
+  <header><span class="hh-eyebrow">Account</span><h1 class="hh-display">Addresses</h1></header>
+  {%- for address in customer.addresses -%}
+    <article class="hh-addr"><p>{{ address | format_address }}</p><a class="hh-link" href="{{ address.url }}">Edit</a></article>
+  {%- endfor -%}
+  {%- form 'customer_address', customer.new_address -%}
+    <h2 class="hh-h3" style="margin-top: var(--hh-space-6);">Add new</h2>
+    <label class="hh-eyebrow">First <input class="hh-input" name="address[first_name]"></label>
+    <label class="hh-eyebrow">Last <input class="hh-input" name="address[last_name]"></label>
+    <label class="hh-eyebrow">Address <input class="hh-input" name="address[address1]"></label>
+    <label class="hh-eyebrow">City <input class="hh-input" name="address[city]"></label>
+    <label class="hh-eyebrow">Country <input class="hh-input" name="address[country]"></label>
+    <button type="submit" class="hh-btn" style="margin-top: var(--hh-space-3);">Save</button>
+  {%- endform -%}
+</div></section>
+<style>.hh-addr { padding: var(--hh-space-3) 0; border-bottom: 1px solid var(--hh-rule); } label { display: grid; gap: 0.25rem; margin: 0.5rem 0; }</style>

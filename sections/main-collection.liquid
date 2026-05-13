@@ -1,0 +1,53 @@
+{%- comment %} Composition: collection.asymmetric-tiles.5-shape — repeating ABCDE rhythm
+   Different from Storynest (editorial-mixed) + Margin (masonry) + Puffypaw (uniform-4).
+{% endcomment -%}
+<section class="hh-coll hh-section" data-section-id="{{ section.id }}">
+  <div class="hh-page">
+    <header class="hh-coll__head">
+      <span class="hh-eyebrow">Collection</span>
+      <h1 class="hh-display">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}<p class="hh-lead">{{ collection.description }}</p>{%- endif -%}
+    </header>
+    <div class="hh-rule"></div>
+    {%- if collection.products.size > 0 -%}
+      {%- paginate collection.products by 30 -%}
+        <div class="hh-coll__asym">
+          {%- for product in collection.products -%}
+            {%- assign slot_index = forloop.index0 | modulo: 5 -%}
+            {%- case slot_index -%}{%- when 0 -%}{%- assign slot = 'a' -%}{%- when 1 -%}{%- assign slot = 'b' -%}{%- when 2 -%}{%- assign slot = 'c' -%}{%- when 3 -%}{%- assign slot = 'd' -%}{%- else -%}{%- assign slot = 'e' -%}{%- endcase -%}
+            <a class="hh-asym__tile hh-asym__tile--{{ slot }} hh-reveal" href="{{ product.url }}">
+              {%- if product.featured_image -%}{%- assign cat = product.title | escape -%}{{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: cat }}
+              {%- else -%}<div style="width:100%;height:100%;background:linear-gradient(135deg,var(--hh-sage),var(--hh-clay));"></div>{%- endif -%}
+              <span class="hh-asym__label">{{ product.title }} · {{ product.price | money_without_trailing_zeros }}</span>
+            </a>
+          {%- endfor -%}
+        </div>
+        {%- if paginate.pages > 1 -%}
+          <nav class="hh-coll__pager">{%- if paginate.previous -%}<a class="hh-link" href="{{ paginate.previous.url }}">← Previous</a>{%- endif -%}<span class="hh-eyebrow">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>{%- if paginate.next -%}<a class="hh-link" href="{{ paginate.next.url }}">Next →</a>{%- endif -%}</nav>
+        {%- endif -%}
+      {%- endpaginate -%}
+    {%- else -%}
+      <p class="hh-coll__empty">Empty for now. <a class="hh-link" href="{{ routes.all_products_collection_url }}">Browse all</a></p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+.hh-coll__head { display: grid; gap: var(--hh-space-3); padding-bottom: var(--hh-space-3); }
+.hh-coll__asym { display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: 240px; gap: var(--hh-space-3); margin-top: var(--hh-space-5); }
+.hh-asym__tile { position: relative; overflow: hidden; border-radius: var(--hh-radius); display: block; background: var(--hh-bg-2); }
+.hh-asym__tile img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--hh-dur-slow) var(--hh-ease); }
+.hh-asym__tile:hover img { transform: scale(1.03); }
+.hh-asym__tile--a { grid-column: span 2; }
+.hh-asym__tile--b { grid-column: span 2; grid-row: span 2; }
+.hh-asym__tile--c { grid-column: span 2; }
+.hh-asym__tile--d { grid-column: span 3; }
+.hh-asym__tile--e { grid-column: span 1; grid-row: span 2; }
+.hh-asym__label { position: absolute; left: var(--hh-space-3); bottom: var(--hh-space-3); background: rgba(251, 246, 236, 0.94); padding: 0.3rem 0.7rem; border-radius: var(--hh-radius); font-size: var(--hh-fs-xs); backdrop-filter: blur(8px); font-weight: 500; }
+.hh-coll__pager { display: flex; justify-content: space-between; align-items: center; margin-top: var(--hh-space-7); padding-top: var(--hh-space-4); border-top: 1px solid var(--hh-rule); }
+.hh-coll__empty { padding-block: var(--hh-space-8); text-align: center; color: var(--hh-ink-soft); }
+@media (max-width: 880px) { .hh-coll__asym { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; }
+  .hh-asym__tile--a, .hh-asym__tile--b, .hh-asym__tile--c, .hh-asym__tile--d, .hh-asym__tile--e { grid-column: auto; grid-row: auto; }
+}
+{% endstylesheet %}
+{% schema %}{ "name": "Collection", "tag": "section" }{% endschema %}
