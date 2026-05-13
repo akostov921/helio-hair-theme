@@ -5,6 +5,16 @@
    Type system: serif italic display + sans body, 1.333 ratio
    Motion: subtle (300-500ms long fade-ups, hover-color-shift only)
    Form: ghost-line + underlined-only inputs
+
+   Industry research applied (research/premium-hair-care.md, 8 competitors):
+   - Median 11 sections per homepage — we have 14 ✓
+   - Top fonts: Oribe uses itc_avant_garde_gothic (modern sans), Briogeo uses Tiempos (serif).
+     We chose Fraunces — close cousin of Tiempos (serif italic display), matching
+     the Briogeo direction (which scored highest in editorial DNA).
+   - Density target: BALANCED (avg WPN 0.6 in competitor sample). Section copy
+     stays at 30-80 words — verified in index.json.
+   - Must-have sections detected: hero, value-props, featured, ingredient-callout,
+     founder, testimonials, FAQ, sustainability, newsletter — all included ✓
    ============================================================= */
 
 :root {
